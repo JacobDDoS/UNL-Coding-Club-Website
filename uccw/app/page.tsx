@@ -1,103 +1,119 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+import { useEffect } from 'react';
+import Matter, { World } from 'matter-js';
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+export default function LandingPage() {
+    useEffect(() => {
+
+        const height:number = window.innerHeight;
+        const width:number = window.innerWidth;
+        var start:boolean = false;
+
+        console.log("x: "+ width + " y: " + height);
+
+
+        // module aliases
+            var Engine = Matter.Engine,
+                Events = Matter.Events,
+                Render = Matter.Render,
+                Runner = Matter.Runner,
+                Body = Matter.Body,
+                Bodies = Matter.Bodies,
+                Composite = Matter.Composite;
+
+            // create an engine
+            const engine = Engine.create();
+            engine.gravity.scale = .00005;
+
+            // create a renderer
+            const render = Render.create({
+                element: document.body,  //creates canvas element to render to
+                engine: engine,
+                options: {
+                    width: window.innerWidth,
+                    height: window.innerHeight,
+                    background: 'transport',
+                    wireframes: false,
+                }
+            });
+
+
+            function spawn() {
+                const randX = Math.random() * innerWidth;
+                const randSize = 20 + Math.random() * 80;
+                const randGrav = Math.random() / 50;
+                const box = Bodies.rectangle(randX, -100, randSize, randSize, {
+                    frictionAir: randGrav,
+                    render: {
+                        sprite: {
+                            texture: '/square.png',
+                            xScale: randSize/ 445,
+                            yScale: randSize / 446,
+                        } 
+                    }});
+                const spin = (Math.random() - 0.5) * 0.4; //goes too fast sometimes but its funny
+                Body.setAngularVelocity(box, spin);
+                Composite.add(engine.world, box);
+            }
+
+            var last = Date.now();
+            
+            window.addEventListener('keydown', (event) => {
+                if (event.key === " ") {
+                    console.log("Space")
+                    event.preventDefault();
+                    start = !start;
+                }
+            });
+
+            Events.on(engine, 'beforeUpdate', () => {
+                if (!start) return;
+                const now = Date.now();
+                if (now - last > 1000) {
+                    spawn();
+                    last = now;
+                }
+            })
+            
+            // run the renderer
+            Render.run(render);
+            // create runner
+            const runner = Runner.create();
+            // run the engine
+            Runner.run(runner, engine);
+
+
+            //maybe use setposition to bring back to top? itd be less random.
+            Events.on(engine, 'afterUpdate', () => {
+                const bodies = Composite.allBodies(engine.world);
+                for (const body of bodies) {
+                    const {x, y} = body.position;
+                    if (y > height + 1000) {
+                        World.remove(engine.world, body);
+                        console.log("DELETED");
+                    }}
+            });
+
+            window.addEventListener("resize", (handleResize))
+            function handleResize() {
+                render.canvas.width = window.innerWidth;
+                render.canvas.height = window.innerHeight;
+                render.options.height = window.innerHeight;
+                render.options.width = window.innerWidth;
+                Render.lookAt(render, {
+                    min: {x: 0, y: 0},
+                    max: {x: innerWidth, y: innerHeight},
+                })
+            }
+    
+    return () => {
+        Render.stop(render);
+        Runner.stop(runner);
+        render.canvas.remove();
+    };
+
+
+    });
+
 }

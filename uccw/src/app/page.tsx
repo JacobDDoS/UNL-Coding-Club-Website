@@ -108,12 +108,20 @@ export default function LandingPage() {
             }
     
     return () => {
+        
         Render.stop(render);
         Runner.stop(runner);
         render.canvas.remove();
+        
     };
 
 
     });
+
+    return (
+        <div>
+            <h1 className='absolute height-1/2'>UNL Coding Club</h1>
+        </div>
+    )
 
 }

@@ -14,7 +14,7 @@ export default function LoginButton() {
     <button
       onClick={() => handleClick()}
       disabled={loading}
-      className='absolute right-2 px-3.5 py-1.5 rounded-lg bg-[#D72638] hover:bg-[#d72638c9] disabled:bg-[#d72638a2] font-semibold text-gray-50 hover:text-gray-200 disabled:text-gray-400'
+      className='absolute right-2 px-3.5 py-1.5 rounded-lg bg-[#D72638] hover:bg-[#d72638c9] disabled:bg-[#d72638a2] font-semibold text-font-primary hover:text-gray-200 disabled:text-gray-400'
     >
       {loading
         ? 'Loading'

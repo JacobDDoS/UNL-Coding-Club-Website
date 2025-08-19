@@ -119,8 +119,8 @@ export default function LandingPage() {
     });
 
     return (
-        <div>
-            <h1 className='absolute height-1/2'>UNL Coding Club</h1>
+        <div className="absolute left-20 top-1/2 -translate-y-1/2 max-w-2xl">
+            <h1 className='font-extrabold text-5xl text-white text-balance leading-relaxed'>University of Nebraska Lincoln Coding Club</h1>
         </div>
     )
 

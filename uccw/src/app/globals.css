@@ -4,11 +4,11 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-@theme inline {
+@theme {
   --color-bg-primary: #1E1E1E;
   --color-bg-secondary: #353535;
   --color-bg-tertiary: #5B5B5B;
   --color-secondary: #D72638;
   --color-accent: #39FED7;
-  --color-font-primary: #FDF0D5;
+  --color-font-primary: #FCFCF1;
 }

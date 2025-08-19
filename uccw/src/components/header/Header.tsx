@@ -1,14 +1,16 @@
 import Logo from "./Logo";
-import NavPill from "./NavPill";
-import LoginButton from "./LoginButton";
+import LeftLinks from "./LeftLinks";
+import RightLinks from "./RightLinks";
 
 export default function Header() {
 
   return (
-    <div className='flex flex-row items-center justify-center mx-1 my-2 w-full h-1/5 min-h-[75px] bg-bg-primary'>
-      <Logo />
-      <NavPill />
-      <LoginButton />
+    <div className='flex flex-row justify-center'>
+      <div className='flex flex-row items-center justify-evenly px-10 my-2 w-full max-w-[1100px] h-1/5 min-h-[65px] bg-bg-primary'>
+        <LeftLinks />
+        <Logo />
+        <RightLinks />
+      </div>
     </div>
   );
 }

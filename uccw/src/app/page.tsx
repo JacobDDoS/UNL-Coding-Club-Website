@@ -1,7 +1,7 @@
 'use client';
-
 import { useEffect } from 'react';
 import Matter, { World } from 'matter-js';
+import Image from 'next/image';
 
 export default function LandingPage() {
     useEffect(() => {
@@ -14,7 +14,7 @@ export default function LandingPage() {
 
 
         // module aliases
-            var Engine = Matter.Engine,
+            const Engine = Matter.Engine,
                 Events = Matter.Events,
                 Render = Matter.Render,
                 Runner = Matter.Runner,
@@ -31,12 +31,16 @@ export default function LandingPage() {
                 element: document.body,  //creates canvas element to render to
                 engine: engine,
                 options: {
-                    width: window.innerWidth,
-                    height: window.innerHeight,
-                    background: 'transport',
+                    width,
+                    height,
+                    background: 'transparent',
                     wireframes: false,
                 }
             });
+            render.canvas.style.position = 'fixed';
+            render.canvas.style.top = '0';
+            render.canvas.style.left = '0';
+            render.canvas.style.zIndex = '-5';
 
 
             function spawn() {
@@ -119,8 +123,22 @@ export default function LandingPage() {
     });
 
     return (
-        <div className="absolute left-20 top-1/2 -translate-y-1/2 max-w-2xl">
-            <h1 className='font-extrabold text-5xl text-white text-balance leading-relaxed'>University of Nebraska Lincoln Coding Club</h1>
+        <div className="select-none">
+            <div className="flex items-center justify-around px-10 py-30">
+                <div className="max-w-2xl z-10">
+                    <h1 className='font-extrabold text-5xl text-white text-balance leading-relaxed drop-shadow-lg/50 select-none'>University of Nebraska Lincoln Coding Club</h1>
+                </div>
+                <div className="drop-shadow-2xl/25 drop-shadow-white -z-10">
+                    <Image 
+                    src='/landinglogotest.png' 
+                    alt='Logo'
+                    width={300}
+                    height={300}
+                    />
+                </div>
+            </div>
+            {/*top block*/}
+            <div className="absolute w-screen h-1/8 top-0 left-0 -z-1 bg-bg-primary"></div>
         </div>
     )
 

@@ -4,11 +4,14 @@ import Matter, { World } from 'matter-js';
 import Image from 'next/image';
 
 export default function LandingPage() {
+    var start:boolean = false; //in the future, this should be made a state variable most likely
+                                
+
     useEffect(() => {
+        
 
         const height:number = window.innerHeight;
         const width:number = window.innerWidth;
-        var start:boolean = false;
 
         console.log("x: "+ width + " y: " + height);
 
@@ -126,7 +129,7 @@ export default function LandingPage() {
         <div className="select-none">
             <div className="flex items-center justify-around px-10 py-30">
                 <div className="max-w-2xl z-10">
-                    <h1 className='font-extrabold text-5xl text-white text-balance leading-relaxed drop-shadow-lg/50 select-none'>University of Nebraska Lincoln Coding Club</h1>
+                    <h1 className='font-extrabold text-5xl text-white text-balance leading-relaxed drop-shadow-lg/50 select-none'>University of Nebraska Lincoln Coding Club (WIP)</h1>
                 </div>
                 <div className="drop-shadow-2xl/25 drop-shadow-white -z-10">
                     <Image 
@@ -139,6 +142,9 @@ export default function LandingPage() {
             </div>
             {/*top block*/}
             <div className="absolute w-screen h-1/8 top-0 left-0 -z-1 bg-bg-primary"></div>
+            {!start &&<div className="fixed flex bottom-5 left-1/2 transform -translate-x-1/2  items-center text-xl text-white">
+                <p>press space to start</p>
+            </div>}
         </div>
     )
 

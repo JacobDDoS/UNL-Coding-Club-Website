@@ -3,7 +3,6 @@ import Image from 'next/image';
 import Blocks from "@/src/components/page/Blocks";
 
 export default function LandingPage() {
-    
 
     return (
         
@@ -11,7 +10,9 @@ export default function LandingPage() {
             <Blocks/>
             <div className="flex items-center justify-around px-10 py-30">
                 <div className="max-w-2xl z-10 ">
-                    <h1 className='font-extrabold text-5xl text-white text-balance leading-relaxed drop-shadow-lg/50 select-none'>University of Nebraska Lincoln Coding Club</h1>
+                    <h1 className='font-extrabold text-5xl text-white text-balance leading-relaxed drop-shadow-lg/50 select-none'>
+                        University of Nebraska Lincoln <span className='text-secondary'>Coding Club</span>
+                    </h1>
                 </div>
                 <div className="drop-shadow-2xl/25 drop-shadow-white z-10">
                     <Image 
@@ -25,8 +26,6 @@ export default function LandingPage() {
             {/*top block*/}
             <div className="absolute w-screen h-1/8 top-0 left-0 -z-1 bg-bg-primary"></div>
 
-            
-            
         </div>
     )
 

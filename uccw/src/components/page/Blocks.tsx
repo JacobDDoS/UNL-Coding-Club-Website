@@ -8,8 +8,8 @@ export default function Blocks() {
 
     useEffect(() => {
 
-        const height:number = window.innerHeight;
-        const width:number = window.innerWidth;
+        const width: number = containerRef.current?.offsetWidth || 200;
+        const height: number = containerRef.current?.offsetHeight || 400;
 
 
         // module aliases
@@ -36,9 +36,11 @@ export default function Blocks() {
                     wireframes: false,
                 }
             });
-            render.canvas.style.position = 'fixed';
+            render.canvas.style.position = 'absolute';
             render.canvas.style.top = '0';
             render.canvas.style.left = '0';
+            render.canvas.style.width = '100%';
+            render.canvas.style.height = '100%';
             render.canvas.style.zIndex = '-5';
             render.canvas.style.pointerEvents = "none";
 
@@ -55,19 +57,23 @@ export default function Blocks() {
             Composite.add(engine.world, [box1]);*/
 
             function spawn() {
-                const randX = Math.random() * innerWidth;
+                const rectWidth = containerRef.current?.offsetWidth || 200;
+                const randX = Math.random() * rectWidth;
                 const randSize = 20 + Math.random() * 80;
                 const randGrav = Math.random() / 50;
                 const box = Bodies.rectangle(randX, -100, randSize, randSize, {
                     frictionAir: randGrav,
+                    chamfer: {
+                        radius: 9
+                    },
                     render: {
                         sprite: {
                             texture: '/square.png',
-                            xScale: randSize/ 445,
+                            xScale: randSize / 445,
                             yScale: randSize / 446,
                         } 
                     }});
-                const spin = (Math.random() - 0.5) * 0.4; //goes too fast sometimes but its funny
+                const spin = (Math.random() - 0.5) * 0.4;
                 Body.setAngularVelocity(box, spin);
                 Composite.add(engine.world, box);
             }
@@ -95,7 +101,7 @@ export default function Blocks() {
             Events.on(engine, 'afterUpdate', () => {
                 const bodies = Composite.allBodies(engine.world);
                 for (const body of bodies) {
-                    const {x, y} = body.position;
+                    const { y } = body.position;
                     if (y > height + 1000) {
                         World.remove(engine.world, body);
                         console.log("DELETED");
@@ -103,14 +109,16 @@ export default function Blocks() {
             });
 
             function handleResize() {
-                render.canvas.width = window.innerWidth;
-                render.canvas.height = window.innerHeight;
-                render.options.height = window.innerHeight;
-                render.options.width = window.innerWidth;
+                const newWidth = containerRef.current?.offsetWidth || 200;
+                const newHeight = containerRef.current?.offsetHeight || 400;
+                render.canvas.width = newWidth;
+                render.canvas.height = newHeight;
+                render.options.width = newWidth;
+                render.options.height = newHeight;
                 Render.lookAt(render, {
-                    min: {x: 0, y: 0},
-                    max: {x: innerWidth, y: innerHeight},
-                })
+                    min: { x: 0, y: 0 },
+                    max: { x: newWidth, y: newHeight },
+                });
             }
             window.addEventListener("resize", (handleResize))
 
@@ -126,9 +134,12 @@ export default function Blocks() {
 
 
     
-    });
+    },[]);
     return (
-        <div ref={containerRef} className='absolute' />
+        <div
+            ref={containerRef}
+            className="absolute mx-auto left-1/2 h-5/6 w-11/12 -translate-x-1/2 rounded-4xl outline-1 outline-white z-10 overflow-hidden"
+        />
     )
 
 }

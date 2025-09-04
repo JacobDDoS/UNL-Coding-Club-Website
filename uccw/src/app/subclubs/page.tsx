@@ -1,5 +1,10 @@
+import Blocks from "@/src/components/page/Blocks";
+
 export default function Home() {
   return (
-    <p>waddup world!</p>
+    <div>
+      <Blocks/>
+
+    </div>
   );
 }

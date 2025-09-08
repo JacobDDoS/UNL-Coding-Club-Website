@@ -81,7 +81,6 @@ export default function Blocks() {
             var last = Date.now();
 
             Events.on(engine, 'beforeUpdate', () => {
-                //if (!start) return;
                 const now = Date.now();
                 if (now - last > 1000) {
                     spawn();

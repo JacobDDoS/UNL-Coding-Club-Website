@@ -1,4 +1,3 @@
-'use client';
 import Image from 'next/image';
 import Blocks from "@/src/components/page/Blocks";
 
@@ -7,7 +6,7 @@ export default function LandingPage() {
     return (
         
         <div className="select-none overflow-hidden">
-            <Blocks/>
+            
             <div className="flex items-center justify-around px-10 py-30">
                 <div className="max-w-2xl z-10 ">
                     <h1 className='font-extrabold text-5xl text-white text-balance leading-relaxed drop-shadow-lg/50 select-none'>
@@ -23,9 +22,7 @@ export default function LandingPage() {
                     />
                 </div>
             </div>
-            {/*top block*/}
-            <div className="absolute w-screen h-1/8 top-0 left-0 -z-1 bg-bg-primary"></div>
-
+            
         </div>
     )
 

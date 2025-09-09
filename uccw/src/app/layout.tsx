@@ -14,9 +14,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="min-h-full">
       <body
-        className={`--font-geist-sans --font-geist-mono antialiased bg-bg-primary`}
+        className="--font-geist-sans --font-geist-mono antialiased bg-bg-primary min-h-full h-dvh bg-linear-to-b from-[#1E1E1E]/[.1] to-[#2E2E2E]"
       >
         <Header />
         {children}

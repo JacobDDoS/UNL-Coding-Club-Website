@@ -4,16 +4,6 @@ import "@/src/app/globals.css";
 import Header from "@/src/components/header/Header";
 import Blocks from "@/src/components/page/Blocks";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
   title: "UNL Coding Club",
   description: "Official UNL Coding Club",
@@ -25,9 +15,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="min-h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-bg-primary`}
+        className="--font-geist-sans --font-geist-mono antialiased bg-bg-primary min-h-full h-dvh bg-linear-to-b from-[#1E1E1E]/[.1] to-[#2E2E2E]"
       >
         <Header />
         <Blocks/>

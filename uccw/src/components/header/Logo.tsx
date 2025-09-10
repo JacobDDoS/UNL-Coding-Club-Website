@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Logo() {
   return (
-    <div className='relative mx-2 w-[75px] h-[75px]'>
+    <a href="/" className='absolute w-[125px] h-[125px] transition ease-in duration-300 hover:scale-105'>
       {/* the background of this image does 
             not match the page background   */}
       <Image
@@ -10,6 +10,6 @@ export default function Logo() {
         alt='Logo'
         fill
       />
-    </div>
+    </a>
   );
 }

@@ -137,7 +137,7 @@ export default function Blocks() {
     return (
         <div
             ref={containerRef}
-            className="absolute mx-auto left-1/2 h-5/6 w-11/12 -translate-x-1/2 rounded-4xl outline-1 outline-white z-10 overflow-hidden"
+            className="absolute mx-auto pt-2 h-full w-full z-10 overflow-hidden"
         />
     )
 

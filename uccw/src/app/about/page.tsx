@@ -6,6 +6,7 @@ export default function Home() {
     <div className="select-none overflow-hidden">
                 
                 <div className="flex items-center justify-around px-10 py-30">
+                    <Blocks/>
                     <div className="max-w-2xl z-10 ">
                         <h1 className='font-extrabold text-5xl text-white text-balance leading-relaxed drop-shadow-lg/50 select-none'>
                             Learning By Doing, One Project at a Time

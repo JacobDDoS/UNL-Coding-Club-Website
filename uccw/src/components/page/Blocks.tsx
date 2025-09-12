@@ -2,11 +2,16 @@
 import { useEffect, useRef } from 'react';
 import Matter, { World } from 'matter-js';
 
+let initialized = false;
+
 export default function Blocks() {
     
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        /* if (initialized) return;
+        initialized = true */
+
 
         const width: number = containerRef.current?.offsetWidth || 200;
         const height: number = containerRef.current?.offsetHeight || 400;
@@ -78,15 +83,19 @@ export default function Blocks() {
                 Composite.add(engine.world, box);
             }
 
-            var last = Date.now();
+            let frameCount = 0;
+            let animationId: number;
 
-            Events.on(engine, 'beforeUpdate', () => {
-                const now = Date.now();
-                if (now - last > 1000) {
+            function animate() {
+                frameCount++;
+                if (frameCount % 60 === 0) {
                     spawn();
-                    last = now;
                 }
-            })
+                animationId = requestAnimationFrame(animate);
+            }
+            
+            // Start the animation loop
+            animate();
             
             // run the renderer
             Render.run(render);
@@ -119,16 +128,12 @@ export default function Blocks() {
                     max: { x: newWidth, y: newHeight },
                 });
             }
-            window.addEventListener("resize", (handleResize))
+            window.addEventListener("resize", handleResize)
 
     
     return () => {
-        
-        Render.stop(render);
-        Runner.stop(runner);
-        render.canvas.remove();
+        cancelAnimationFrame(animationId);
         window.removeEventListener("resize", handleResize);
-
     };
 
 
@@ -137,7 +142,7 @@ export default function Blocks() {
     return (
         <div
             ref={containerRef}
-            className="absolute mx-auto pt-2 h-full w-full z-10 overflow-hidden"
+            className="absolute inset-0"
         />
     )
 

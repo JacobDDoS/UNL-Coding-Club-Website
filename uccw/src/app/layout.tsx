@@ -16,12 +16,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="min-h-full">
+    <html lang="en" className="min-h-screen">
       <body
-        className="--font-geist-sans --font-geist-mono antialiased bg-bg-primary min-h-full h-dvh bg-linear-to-b from-[#1E1E1E]/[.1] to-[#2E2E2E]"
+        className="--font-geist-sans --font-geist-mono antialiased bg-bg-primary min-h-screen bg-linear-to-b from-[#1E1E1E]/[.1] to-[#2E2E2E]"
       >
         <Header />
-        <div className="select-none overflow-hidden h-[calc(90%-50px)] w-[calc(100%-50px)] flex justify-center rounded-2xl m-auto relative shadow-[inset_0_0_15px_rgba(0,0,0,0.5)] shadow-white">
+        <div className="select-none min-h-[calc(90vh-50px)] w-[calc(100%-50px)] flex justify-center rounded-2xl m-auto relative shadow-[inset_0_0_15px_rgba(0,0,0,0.5)] shadow-white">
              <Blocks />
             {children}
         </div>

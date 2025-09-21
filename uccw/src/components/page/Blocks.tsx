@@ -2,20 +2,18 @@
 import { useEffect, useRef } from 'react';
 import Matter, { World } from 'matter-js';
 
-let initialized = false;
 
 export default function Blocks() {
     
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        /* if (initialized) return;
-        initialized = true */
 
-
+        const container = containerRef.current;
+        if (!container) return;
+        
         const width: number = containerRef.current?.offsetWidth || 200;
         const height: number = containerRef.current?.offsetHeight || 400;
-
 
         // module aliases
             const Engine = Matter.Engine,
@@ -83,19 +81,24 @@ export default function Blocks() {
                 Composite.add(engine.world, box);
             }
 
-            let frameCount = 0;
             let animationId: number;
+            let last = 0;
+            const interval = 2000;
 
-            function animate() {
-                frameCount++;
-                if (frameCount % 60 === 0) {
+            function animate(now: number) {
+                if (now - last > interval * 2) {
+                    last = now;
+                }
+                
+                if (now - last >= interval) {
                     spawn();
+                    last = now;
                 }
                 animationId = requestAnimationFrame(animate);
             }
             
             // Start the animation loop
-            animate();
+            animationId = requestAnimationFrame(animate);
             
             // run the renderer
             Render.run(render);
@@ -116,6 +119,13 @@ export default function Blocks() {
                     }}
             });
 
+
+            let ro: ResizeObserver | null = null;
+            if (typeof ResizeObserver !== 'undefined') {
+            ro = new ResizeObserver(handleResize);
+            ro.observe(container);
+            }
+
             function handleResize() {
                 const newWidth = containerRef.current?.offsetWidth || 200;
                 const newHeight = containerRef.current?.offsetHeight || 400;
@@ -123,17 +133,21 @@ export default function Blocks() {
                 render.canvas.height = newHeight;
                 render.options.width = newWidth;
                 render.options.height = newHeight;
-                Render.lookAt(render, {
+               /*  Render.lookAt(render, {
                     min: { x: 0, y: 0 },
                     max: { x: newWidth, y: newHeight },
-                });
+                }); */
             }
-            window.addEventListener("resize", handleResize)
 
     
     return () => {
         cancelAnimationFrame(animationId);
-        window.removeEventListener("resize", handleResize);
+        Render.stop(render);
+        Runner.stop(runner);
+        Engine.clear(engine);
+        render.canvas.remove();
+        render.textures = {};
+        ro?.disconnect();
     };
 
 

@@ -30,7 +30,7 @@ export default function SubclubPage() {
         )} </p>
           <p className="text-white font-extrabold drop-shadow-lg/50 text-xl my-2">Skills we learn/practice:</p>
           <ul className="font-extrabold drop-shadow-lg/50 text-xl my-2 text-[var(--color-accent)] list-disc marker:[var(--color-accent)] ml-8">
-            {subclub.skillsLearned.map((skill) => <li>{skill}</li>)}
+            {subclub.skillsLearned.map((skill) => <li key={subclub.title}>{skill}</li>)}
           </ul>
           <p className="text-white font-extrabold drop-shadow-lg/50 text-xl my-2">We meet every <span className="text-[var(--color-secondary)]">{subclub.meetingTime}</span></p>
         </div>
